@@ -4,6 +4,7 @@ using FinalAssignment_Algorithms.Structures;
 using System;
 using System.Data.Common;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace FinalAssignment_Algorithms
@@ -16,6 +17,9 @@ namespace FinalAssignment_Algorithms
         private LinkedList<Coord> pathToDraw;
 
         private LinkedList<Coord> oldPathToDraw;
+
+        private string currentMapName = "";
+
 
 
         public Form1()
@@ -42,7 +46,9 @@ namespace FinalAssignment_Algorithms
                 try
                 {
                     currentMap = LoadMap.Load(fileManagerShow.FileName);
-                    
+                    currentMapName = System.IO.Path.GetFileNameWithoutExtension(fileManagerShow.FileName);
+
+
                     pathToDraw = null;     // clear old path
                     MapPanel.Invalidate(); // redraw map
                 }
@@ -90,6 +96,15 @@ namespace FinalAssignment_Algorithms
 
             // store the new path for painting
             pathToDraw = path;
+
+            string algorithmName_XXX = algorithmUsed;
+            string outputName = currentMapName + "Path_" + algorithmName_XXX + ".txt";
+
+            SavePath(outputName, pathToDraw);
+
+            // optional but nice
+            MessageBox.Show("Path saved to: " + outputName);
+
 
             MessageBox.Show("Path found with " + path.Count + " steps.");
 
@@ -155,6 +170,21 @@ namespace FinalAssignment_Algorithms
             int endPart1 = currentMap.Goal.Col * cellSize;
             int endPart2 = currentMap.Goal.Row * cellSize;
             graphics_.FillRectangle(Brushes.Red, endPart1, endPart2, cellSize, cellSize);
+        }
+
+        private void SavePath(string fileName, LinkedList<Coord> path)
+        {
+            // streamwriter weird, file in /bin somewhere 
+            using (StreamWriter sw = new StreamWriter(fileName))
+            {
+                var node = path.Head;
+
+                while (node != null)
+                {
+                    sw.WriteLine(node.Value.Row + " " + node.Value.Col);
+                    node = node.Next;
+                }
+            }
         }
 
         private void AlgorithmDropDown_SelectedIndexChanged(object sender, EventArgs e)
