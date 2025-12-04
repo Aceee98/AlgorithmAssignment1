@@ -20,6 +20,9 @@ namespace FinalAssignment_Algorithms
                 case "BestFirst":
                     return new BestFirst();
 
+                case "Dijkstra":
+                    return new Dijkstra();
+
 
 
 

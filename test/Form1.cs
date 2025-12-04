@@ -102,7 +102,7 @@ namespace FinalAssignment_Algorithms
                 return;
 
             Graphics graphics_ = e.Graphics;
-            int cellSize = 25;
+            int cellSize = 20;
 
             // draw terrain grid
             for (int row = 0; row < currentMap.Rows; row++)
