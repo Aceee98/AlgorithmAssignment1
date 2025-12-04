@@ -26,12 +26,7 @@ namespace FinalAssignment_Algorithms
         {
             InitializeComponent();
 
-            // fill dropdown
-            AlgorithmDropDown.Items.Add("BFS");
-            AlgorithmDropDown.Items.Add("DFS");
-            AlgorithmDropDown.Items.Add("HillClimb");
-            AlgorithmDropDown.Items.Add("BestFirst");
-            AlgorithmDropDown.Items.Add("Dijkstra");
+
             // to make sure dropdown has a base value
             AlgorithmDropDown.SelectedIndex = 0;
         }
@@ -67,7 +62,17 @@ namespace FinalAssignment_Algorithms
                 return;
             }
 
+
+            if (AlgorithmDropDown.SelectedItem == null)
+            {
+                MessageBox.Show("An error has occured. Please Enter a valid algortihm.");
+                return;
+            }
+
             string algorithmUsed = AlgorithmDropDown.SelectedItem.ToString();
+
+
+
 
             // get the algorihtm from the factory
             PathFinderInterface finder = FinderFactory.Create(algorithmUsed);
